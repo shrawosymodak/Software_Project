@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         Dont = findViewById(R.id.dont);
         usr = findViewById(R.id.username);
         pass = findViewById(R.id.Password);
-        mAuth = FirebaseAuth.getInstance();
+//        mAuth = FirebaseAuth.getInstance();
 
         Dont.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String user = usr.getText().toString();
                 String password = pass.getText().toString();
-                mAuth.signInWithEmailAndPassword(user,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+             //   mAuth.signInWithEmailAndPassword(user,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                    public void onComplete(@NonNull Task<AuthResult> task)
+            {
                         if(task.isSuccessful())
                         {
                             Intent intent = new Intent(MainActivity.this, fragmentmain.class);
