@@ -20,50 +20,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-<<<<<<< HEAD
 
 
-
-=======
-        logIn = findViewById(R.id.Login);
-        Dont = findViewById(R.id.dont);
-        usr = findViewById(R.id.username);
-        pass = findViewById(R.id.Password);
-//        mAuth = FirebaseAuth.getInstance();
-
-        Dont.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(MainActivity.this, SignUp.class);
-                startActivity(intent);
-            }
-        });
-        logIn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                String user = usr.getText().toString();
-                String password = pass.getText().toString();
-                Intent intent = new Intent(MainActivity.this, fragmentmain.class);
-                startActivity(intent);
-                //   mAuth.signInWithEmailAndPassword(user,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task)
-//            {
-//                        if(task.isSuccessful())
-//                        {
-//                        }
-//                        else
-//                        {
-//                            Toast.makeText(MainActivity.this, "Wrong Id or Password", Toast.LENGTH_SHORT).show();
-//                        }
-//
-//                    }
-//                });
-            }
-        });
->>>>>>> 377025f1dece6946ed1cd722c62594bc2a4d8667
     }
 }
