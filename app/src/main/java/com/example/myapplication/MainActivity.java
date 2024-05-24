@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.mainfragment.fragmentmain;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,39 +31,35 @@ public class MainActivity extends AppCompatActivity {
 
         Dont.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,SignUp.class);
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(MainActivity.this, SignUp.class);
                 startActivity(intent);
             }
         });
-        logIn.setOnClickListener(new View.OnClickListener() {
+        logIn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 String user = usr.getText().toString();
                 String password = pass.getText().toString();
-             //   mAuth.signInWithEmailAndPassword(user,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task)
-            {
-                        if(task.isSuccessful())
-                        {
-                            Intent intent = new Intent(MainActivity.this, fragmentmain.class);
-                            startActivity(intent);
-                        }
-                        else
-                        {
-                            Toast.makeText(MainActivity.this, "Wrong Id or Password", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-
-
-
-
-
-
-
+                Intent intent = new Intent(MainActivity.this, fragmentmain.class);
+                startActivity(intent);
+                //   mAuth.signInWithEmailAndPassword(user,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task)
+//            {
+//                        if(task.isSuccessful())
+//                        {
+//                        }
+//                        else
+//                        {
+//                            Toast.makeText(MainActivity.this, "Wrong Id or Password", Toast.LENGTH_SHORT).show();
+//                        }
+//
+//                    }
+//                });
             }
         });
     }
