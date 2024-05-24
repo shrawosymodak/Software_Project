@@ -1,13 +1,15 @@
 package com.example.myapplication.Class;
 
-public class ExpenseClass {
+public class ExpenseClass
+{
 
     int amount;
     String id;
     String Description;
     String type;
 
-    public ExpenseClass(int amount, String description, String type, String id ) {
+    public ExpenseClass(int amount, String description, String type, String id )
+    {
         this.amount = amount;
         Description = description;
         this.type = type;

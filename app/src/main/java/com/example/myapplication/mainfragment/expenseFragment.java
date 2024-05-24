@@ -37,7 +37,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class expenseFragment extends Fragment {
+public class expenseFragment extends Fragment
+{
     private Button expenseButton,statusButton,addBalance;
     private TextView PreviousBalance,CurrentBalance,LastTransaction , date;
     private EditText balance;
@@ -45,9 +46,9 @@ public class expenseFragment extends Fragment {
     private List<ExpenseClass> mylist;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -58,7 +59,8 @@ public class expenseFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
         super.onViewCreated(view, savedInstanceState);
 
         //initializing everything
@@ -72,16 +74,6 @@ public class expenseFragment extends Fragment {
         date = view.findViewById(R.id.date);
         balance = view.findViewById(R.id.addBalance);
         addBalance = view.findViewById(R.id.addButton);
-        //statusButton= view.findViewById(R.id.status);
-//        statusButton.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                Intent intent  = new Intent(getContext(), StatusActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
         //setting up recycler view
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -100,13 +92,13 @@ public class expenseFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
         date.setText(currentDate);
-
-
         //addbalance from editText and send Mainbalance to database
 
-//        addBalance.setOnClickListener(new View.OnClickListener() {
+//        addBalance.setOnClickListener(new View.OnClickListener()
+//        {
 //            @Override
-//            public void onClick(View v) {
+//            public void onClick(View v)
+//            {
 //                String Balance = balance.getText().toString();
 //                BalanceClass balanceClass = new BalanceClass(Integer.parseInt(Balance), Integer.parseInt(Balance), 0);
 //                reference1.setValue(balanceClass);
@@ -246,6 +238,5 @@ public class expenseFragment extends Fragment {
             }
         });
     }
-
 }
 
