@@ -5,24 +5,24 @@
         android:id="@+id/todo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/baseline_done_24"
+        android:icon="@drawable/ic_launcher_background"
         android:title="ToDo" />
     <item
         android:id="@+id/habit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/habit"
+        android:icon="@drawable/ic_launcher_foreground"
         android:title="Habit" />
     <item
         android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/progress"
+        android:icon="@drawable/ic_launcher_background"
         android:title="Progress" />
     <item
         android:id="@+id/expense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/expense"
+        android:icon="@drawable/ic_launcher_foreground"
         android:title="Expense" />
 </menu>

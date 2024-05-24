@@ -26,19 +26,13 @@ public class fragmentmain extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragmentmain);
-        //binding = ActivityFragmentmainBinding.inflate(getLayoutInflater());
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_menu);
-
+        binding = ActivityFragmentmainBinding.inflate(getLayoutInflater());
         replaceFragment(new TodoFragment());
 
-        setContentView(bottomNavigationView.getRoot());
-        bottomNavigationView.bottom.setOnItemSelectedListener(item -> {
+        setContentView(binding.getRoot());
+        binding.bottom.setOnItemSelectedListener(item -> {
             if(item.getItemId()==R.id.todo)
                 replaceFragment(new TodoFragment());
-            else if(item.getItemId()==R.id.habit)
-                replaceFragment(new habitFragment());
-            else if(item.getItemId()==R.id.progress)
-                replaceFragment(new progressFragment());
             else if(item.getItemId()==R.id.expense)
                 replaceFragment(new expenseFragment());
             return true;
