@@ -5,13 +5,14 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(primaryKeys = {"id","user_id"})
 public class ExpenseClass
 {
 
-
-    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     public int id;
+
+    @ColumnInfo(name = "user_id")
     public int user_id;
     @ColumnInfo(name = "amount")
     int amount;

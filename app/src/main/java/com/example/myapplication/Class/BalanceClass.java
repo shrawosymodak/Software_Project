@@ -3,11 +3,12 @@ package com.example.myapplication.Class;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-@Entity
+@Entity(primaryKeys = {"balanceId", "user_id"})
 public class BalanceClass
 {
-        @PrimaryKey(autoGenerate = true)
+        @ColumnInfo(name = "balanceId")
         public int balanceId;
+        @ColumnInfo(name = "user_id")
         public int user_id;
         @ColumnInfo(name = "previousBalance")
         private int PreviousBalance;

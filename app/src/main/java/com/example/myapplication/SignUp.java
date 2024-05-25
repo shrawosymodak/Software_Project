@@ -76,6 +76,7 @@ public class SignUp extends AppCompatActivity
                 Intent intent = new Intent(SignUp.this, Login.class);
                 startActivity(intent);
                 Toast.makeText(SignUp.this, "Login Page", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
             }
         });
     }

@@ -13,13 +13,15 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import com.example.myapplication.Class.BalanceClass;
 import com.example.myapplication.Class.ExpenseClass;
 import com.example.myapplication.Class.User;
+import com.example.myapplication.Class.TodoClass;
 
-    @Database(entities = {User.class , BalanceClass.class , ExpenseClass.class}, version = 3)
+    @Database(entities = {User.class , BalanceClass.class , ExpenseClass.class, TodoClass.class}, version = 8)
     public abstract class AppDatabase extends RoomDatabase
     {
         public abstract UserDao userDao();
         public abstract BalanceDao balanceDao();
         public abstract ExpenseDao expenseDao();
+        public abstract TodoDao todoDao();
 
         private static final String DB_NAME = "mainDb";
         private static AppDatabase instance;

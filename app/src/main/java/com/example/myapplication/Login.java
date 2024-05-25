@@ -2,7 +2,9 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -14,6 +16,7 @@ import androidx.room.Room;
 
 
 import com.example.myapplication.Class.User;
+import com.example.myapplication.Class.UserSingleton;
 import com.example.myapplication.mainfragment.fragmentmain;
 import com.example.myapplication.room.AppDatabase;
 import com.example.myapplication.room.UserDao;
@@ -23,6 +26,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class Login extends AppCompatActivity {
     private TextInputEditText emailEditText;
     private TextInputEditText passwordEditText;
+    private TextView reg;
     private Button loginButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,17 @@ public class Login extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailLogin);
         passwordEditText = findViewById(R.id.passwordLogin);
         loginButton = findViewById(R.id.login_button);
+        reg = findViewById(R.id.dont);
+        reg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(Login.this, SignUp.class);
+                startActivity(intent);
+
+            }
+        });
+
 
         loginButton.setOnClickListener(v -> {
             String username = emailEditText.getText().toString().trim();
@@ -53,6 +68,7 @@ public class Login extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    UserSingleton.getInstance().setUser(user);
                                     Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(Login.this, fragmentmain.class);
                                     startActivity(intent);

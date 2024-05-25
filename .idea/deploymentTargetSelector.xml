@@ -4,28 +4,17 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <DropdownSelection timestamp="2024-05-24T18:18:17.073704600Z">
-          <Target type="DEFAULT_BOOT">
-            <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\ASUS\.android\avd\Medium_Phone_API_VanillaIceCream.avd" />
-=======
-        <DropdownSelection timestamp="2024-05-25T00:59:32.882023800Z">
-          <Target type="DEFAULT_BOOT">
-            <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\tanzi\.android\avd\Flutter_Pixel_7_API_30.avd" />
->>>>>>> 92a5eb2b140131ad035200795454e49837be7c4f
-=======
-        <DropdownSelection timestamp="2024-05-25T09:28:12.297673500Z">
+        <DropdownSelection timestamp="2024-05-25T15:36:02.571318Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\tanzi\.android\avd\Pixel_7_Pro_API_30.avd" />
->>>>>>> 38e49c906fa31ee57c5bc688311f6e41c9378d8d
             </handle>
           </Target>
         </DropdownSelection>
         <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="SignUpTest">
+        <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
   </component>
