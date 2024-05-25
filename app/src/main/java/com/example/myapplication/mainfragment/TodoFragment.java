@@ -19,9 +19,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.myapplication.Class.TodoClass;
+import com.example.myapplication.Class.User;
+import com.example.myapplication.Class.UserSingleton;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.todoadapter;
+import com.example.myapplication.room.AppDatabase;
+import com.example.myapplication.room.TodoDao;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 //import com.google.firebase.database.DataSnapshot;
@@ -39,24 +43,35 @@ public class TodoFragment extends Fragment {
     private FloatingActionButton add;
     private TextView text;
     private List<TodoClass> mylist;
+    private User loggedUser;
+    private TodoDao todoDao;
 //    private DatabaseReference reference;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         View view =  inflater.inflate(R.layout.fragment_todo, container, false);
         return view;
 
     }
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
         super.onViewCreated(view, savedInstanceState);
+
+        AppDatabase db = AppDatabase.getInstance(getContext());
+        todoDao = db.todoDao();
+
+        loggedUser = UserSingleton.getInstance().getUser();
 
         recyclerView = view.findViewById(R.id.recycler);
         add = view.findViewById(R.id.addButton);
         mylist = new ArrayList<>();
+        mylist = todoDao.getAll(loggedUser.getUid());
         todoadapter adapter =  new todoadapter(getContext(),mylist);
+
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -75,55 +90,6 @@ public class TodoFragment extends Fragment {
                 showdialogue();
             }
         });
-        //DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference().child("Task");
-        //reference1.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                mylist.clear();
-//                for(DataSnapshot db : snapshot.getChildren())
-//                {
-//                    TodoClass td = new TodoClass();
-//                    td =  db.getValue(TodoClass.class);
-//                    mylist.add(td);
-//                    adapter.notifyDataSetChanged();
-//                }
-//
-//            }
-
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
-//            @Override
-//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-//                return false;
-//            }
-//
-//            @Override
-//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-//                int position = viewHolder.getAdapterPosition();
-//                TodoClass item = mylist.get(position);
-//                switch (direction){
-//                    case ItemTouchHelper.LEFT:
-//                        reference.child(item.getId()).removeValue();
-//                        adapter.notifyDataSetChanged();
-//                        break;
-//
-//                    case ItemTouchHelper.RIGHT:
-//                        reference.child(item.getId()).removeValue();
-//                        adapter.notifyDataSetChanged();
-//
-//                        break;
-//                }
-//
-//
-//
-//            }
-//        };
-//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-//        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
 
@@ -136,22 +102,28 @@ public class TodoFragment extends Fragment {
         AlertDialog alertDialog = new MaterialAlertDialogBuilder(getContext())
                 .setView(view1)
                 .setTitle("Add Task")
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+                {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
 
                     }
                 })
-                .setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+                .setPositiveButton("ADD", new DialogInterface.OnClickListener()
+                {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
                         EditText text2 = view1.findViewById(R.id.taskadd);
                         String task = text2.getText().toString();
-                        //String key = reference.push().getKey();
-                        //TodoClass obj = new TodoClass(task,0,key);
-                        //reference.child(task).setValue(obj);
-
-                        //reference.child(key).setValue(obj);
+                        int key = mylist.size();
+                        key++;
+                        TodoClass todoClass = new TodoClass(task,0,key, loggedUser.getUid());
+                        todoDao.insertAll(todoClass);
+                        mylist.clear();
+                        mylist.addAll(todoDao.getAll(loggedUser.getUid()));
+                        recyclerView.getAdapter().notifyDataSetChanged();
                     }
                 })
                 .create();

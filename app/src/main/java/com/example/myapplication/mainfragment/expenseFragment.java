@@ -82,7 +82,7 @@ public class expenseFragment extends Fragment {
         AppDatabase db = AppDatabase.getInstance(getContext());
         expenseDao = db.expenseDao();
         balanceDao = db.balanceDao();
-        mylist = expenseDao.getAll(loggedUser.getUid());
+        mylist =  expenseDao.getAll(loggedUser.getUid());
 
         // Setting up RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
