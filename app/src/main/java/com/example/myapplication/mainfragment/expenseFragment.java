@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.myapplication.Class.BalanceClass;
 import com.example.myapplication.Class.ExpenseClass;
+import com.example.myapplication.Class.ExpenseManager;
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.expenseAdapter;
 import com.example.myapplication.room.AppDatabase;
@@ -47,12 +48,14 @@ public class expenseFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         return inflater.inflate(R.layout.fragment_expense, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
         super.onViewCreated(view, savedInstanceState);
 
         // Initializing views
@@ -83,7 +86,8 @@ public class expenseFragment extends Fragment {
         date.setText(currentDate);
 
         // Adding balance functionality
-        addBalance.setOnClickListener(new View.OnClickListener() {
+        addBalance.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
                 String balanceText = balance.getText().toString();
@@ -92,7 +96,8 @@ public class expenseFragment extends Fragment {
         });
 
         // Adding an expense
-        expenseButton.setOnClickListener(new View.OnClickListener() {
+        expenseButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
                 View expenseDialogue = LayoutInflater.from(getContext()).inflate(R.layout.expensedialogue, null);
@@ -114,7 +119,8 @@ public class expenseFragment extends Fragment {
                         .setNegativeButton("Cancel", null)
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onClick(DialogInterface dialog, int which)
+                            {
                                 EditText amount = expenseDialogue.findViewById(R.id.amount);
                                 EditText description = expenseDialogue.findViewById(R.id.details);
                                 String type = spinner.getSelectedItem().toString();
@@ -123,8 +129,10 @@ public class expenseFragment extends Fragment {
 
                                 int key = mylist.size() + 1;
 
-                                ExpenseClass expenseClass = new ExpenseClass(Integer.parseInt(amountText), descriptionText, type, key, 1);
-                                expenseDao.insertAll(expenseClass);
+                                //ExpenseClass expenseClass = new ExpenseClass(Integer.parseInt(amountText), descriptionText, type, key, 1);
+                                ExpenseManager expenseManager = new ExpenseManager();
+
+                                expenseDao.insertAll(expenseManager.addExpense(type, descriptionText, Integer.parseInt(amountText), key, 1));
                                 mylist.clear();
                                 mylist.addAll(expenseDao.getAll(1));
                                 adapter1.notifyDataSetChanged();
