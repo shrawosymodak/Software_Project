@@ -1,14 +1,26 @@
 package com.example.myapplication.Class;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class ExpenseClass
 {
 
+
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+    public int uid;
+    @ColumnInfo(name = "amount")
     int amount;
-    String id;
+    @ColumnInfo (name = "description")
     String Description;
+    @ColumnInfo (name = "type")
     String type;
 
-    public ExpenseClass(int amount, String description, String type, String id )
+    public ExpenseClass(int amount, String description, String type, int id )
     {
         this.amount = amount;
         Description = description;
@@ -16,11 +28,11 @@ public class ExpenseClass
         this.id=id;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

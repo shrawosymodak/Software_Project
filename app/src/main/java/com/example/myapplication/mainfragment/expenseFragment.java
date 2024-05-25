@@ -24,7 +24,11 @@ import com.example.myapplication.Class.BalanceClass;
 import com.example.myapplication.Class.ExpenseClass;
 import com.example.myapplication.Class.TodoClass;
 import com.example.myapplication.R;
+import com.example.myapplication.SignUp;
 import com.example.myapplication.adapters.expenseAdapter;
+import com.example.myapplication.room.AppDatabase;
+import com.example.myapplication.room.ExpenseDao;
+import com.example.myapplication.room.UserDao;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 //import com.google.firebase.database.DataSnapshot;
 //import com.google.firebase.database.DatabaseError;
@@ -44,7 +48,7 @@ public class expenseFragment extends Fragment {
     private TextView PreviousBalance,CurrentBalance,LastTransaction , date;
     private EditText balance;
     private RecyclerView recyclerView;
-    private List<ExpenseClass> mylist;
+    public List<ExpenseClass> mylist;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -80,34 +84,13 @@ public class expenseFragment extends Fragment {
         //setting up recycler view
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
-        expenseAdapter adapter = new expenseAdapter(mylist, getContext());
-        recyclerView.setAdapter(adapter);
-//
-        ExpenseClass item1 = new ExpenseClass(100, "Snacks", "Snacks", "1");
-        mylist.add(item1);
-//        ExpenseClass item2 = new ExpenseClass(200, "Groceries", "Groceries", "2");
-//        mylist.add(item2);
-//        ExpenseClass item3 = new ExpenseClass(300, "Food", "Food", "3");
-//        mylist.add(item3);
-//        ExpenseClass item4 = new ExpenseClass(400, "Snacks", "Snacks", "4");
-//        mylist.add(item4);
-//        ExpenseClass item5 = new ExpenseClass(500, "Groceries", "Groceries", "5");
-//        mylist.add(item5);
-//        ExpenseClass item6 = new ExpenseClass(600, "Food", "Food", "6");
-//        mylist.add(item6);
-
-
-        //getting database references
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Expense");
-//        DatabaseReference reference1 = reference.child("MainBalance");
-
-
+        expenseAdapter adapter1 = new expenseAdapter(mylist, getContext());
+        recyclerView.setAdapter(adapter1);
 
         //setting up calendar
         Calendar calendar = Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
         date.setText(currentDate);
-
 
         String Balance = balance.getText().toString();
         addBalance.setOnClickListener(new View.OnClickListener()
@@ -119,125 +102,6 @@ public class expenseFragment extends Fragment {
             }
         });
 
-
-
-        // initialize previous balance and currentbalance from database
-//        reference1.addValueEventListener(new ValueEventListener()
-//        {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot)
-//            {
-//                BalanceClass balanceClass = snapshot.getValue(BalanceClass.class);
-//                PreviousBalance.setText(String.valueOf(balanceClass.getPreviousBalance()));
-//                CurrentBalance.setText(String.valueOf(balanceClass.getCurrentBalance()));
-//                LastTransaction.setText(String.valueOf(balanceClass.getLastTransaction()));
-//                addBalance.setOnClickListener(new View.OnClickListener()
-//                {
-//                    @Override
-//                    public void onClick(View v)
-//                    {
-//                        String Balance =  balance.getText().toString();
-//                        String Currentbalance = Integer.parseInt(Balance) + Integer.parseInt(CurrentBalance.getText().toString()) + "";
-//                        BalanceClass balanceClass = new BalanceClass(Integer.parseInt(Currentbalance), Integer.parseInt(Currentbalance), Integer.parseInt("0"));
-//                        reference1.setValue(balanceClass);
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error)
-//            {
-//
-//            }
-//        });
-
-        //getting data from database and setting up recycler view with list
-//        reference.addValueEventListener(new ValueEventListener()
-//        {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot)
-//            {
-//                mylist.clear();
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-//                {
-//                    ExpenseClass expenseClass = dataSnapshot.getValue(ExpenseClass.class);
-//                    mylist.add(expenseClass);
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error)
-//            {
-//
-//            }
-//        });
-//        /// on swipe method
-//        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
-//            @Override
-//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target)
-//            {
-//                return false;
-//            }
-//
-//            @Override
-//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-//                int position = viewHolder.getAdapterPosition();
-//                ExpenseClass item = mylist.get(position);
-//                switch (direction)
-//                {
-//
-//                    case ItemTouchHelper.LEFT:
-//                        reference1.addListenerForSingleValueEvent(new ValueEventListener()
-//                        {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                BalanceClass balanceClass = snapshot.getValue(BalanceClass.class);
-//                                int currentBalance = balanceClass.getCurrentBalance() + item.getAmount();
-//                                int last = balanceClass.getLastTransaction();
-//                                BalanceClass newbalanceClass = new BalanceClass(currentBalance, currentBalance, last);
-//                                reference1.setValue(newbalanceClass);
-//                                reference.child(item.getId()).removeValue();
-//                                adapter.notifyDataSetChanged();
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError error) {
-//
-//                            }
-//                        });
-//                        break;
-//
-//                    case ItemTouchHelper.RIGHT:
-//                        reference1.addListenerForSingleValueEvent(new ValueEventListener()
-//                        {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                BalanceClass balanceClass = snapshot.getValue(BalanceClass.class);
-//                                int currentBalance = balanceClass.getCurrentBalance() + item.getAmount();
-//                                int last = balanceClass.getLastTransaction();
-//                                BalanceClass newbalanceClass = new BalanceClass(currentBalance, currentBalance, last);
-//                                reference1.setValue(newbalanceClass);
-//                                reference.child(item.getId()).removeValue();
-//                                adapter.notifyDataSetChanged();
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError error) {
-//
-//                            }
-//                        });
-//
-//                        break;
-//                }
-//
-//
-//
-//            }
-//        };
-//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-//        itemTouchHelper.attachToRecyclerView(recyclerView);
-
-        //add button click and showing dialogue
         expenseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -278,23 +142,27 @@ public class expenseFragment extends Fragment {
                                 String type = spinner.getSelectedItem().toString();
                                 String amount1 = amount.getText().toString();
                                 String description1 = description.getText().toString();
-                                int key = 1 ;
+
+
+
+                                AppDatabase db = AppDatabase.getInstance(getContext());
+                                ExpenseDao expenseDao = db.expenseDao();
+                                mylist = expenseDao.getAll();
+                                int key = mylist.size();
                                 key++;
-                                String Key = String.valueOf(key);
-                                ExpenseClass expenseClass = new ExpenseClass(Integer.parseInt(amount1), description1, type,Key);
+
+                                ExpenseClass expenseClass = new ExpenseClass(Integer.parseInt(amount1), description1, type,key);
+                                expenseDao.insertAll(expenseClass);
 
                                 String PB = PreviousBalance.getText().toString();
                                 String CB = CurrentBalance.getText().toString();
-                                mylist.add(expenseClass);
-                                adapter.notifyDataSetChanged();
+
+
+                                adapter1.notifyDataSetChanged();
 
 
                                 BalanceClass newbalanceClass = new BalanceClass(Integer.parseInt(CB), Integer.parseInt(CB) - Integer.parseInt(amount1), Integer.parseInt(amount1));
-                                //DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference().child("Expense").child("MainBalance");
 
-
-                                //reference1.setValue(newbalanceClass);
-                                //reference.child(key).setValue(expenseClass);
 
                             }
                         })

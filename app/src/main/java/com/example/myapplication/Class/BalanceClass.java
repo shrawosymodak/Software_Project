@@ -1,9 +1,19 @@
 package com.example.myapplication.Class;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+@Entity
 public class BalanceClass
 {
+        @PrimaryKey(autoGenerate = true)
+        public int balanceId;
+        public int user_id;
+        @ColumnInfo(name = "previousBalance")
         private int PreviousBalance;
+        @ColumnInfo(name = "currentBalance")
         private int CurrentBalance;
+        @ColumnInfo(name = "lastTransaction")
         private int LastTransaction;
 
         public BalanceClass(int previousBalance, int currentBalance, int lastTransaction) {
@@ -13,7 +23,6 @@ public class BalanceClass
         }
         public BalanceClass()
         {
-
         }
 
         public int getPreviousBalance() {
