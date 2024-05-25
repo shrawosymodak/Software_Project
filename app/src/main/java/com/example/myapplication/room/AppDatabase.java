@@ -14,7 +14,7 @@ import com.example.myapplication.Class.BalanceClass;
 import com.example.myapplication.Class.ExpenseClass;
 import com.example.myapplication.Class.User;
 
-    @Database(entities = {User.class , BalanceClass.class , ExpenseClass.class}, version = 3)
+    @Database(entities = {User.class , BalanceClass.class , ExpenseClass.class}, version = 5)
     public abstract class AppDatabase extends RoomDatabase
     {
         public abstract UserDao userDao();

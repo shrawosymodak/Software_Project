@@ -20,11 +20,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.myapplication.Class.BalanceClass;
+import com.example.myapplication.Class.BalanceManager;
 import com.example.myapplication.Class.ExpenseClass;
 import com.example.myapplication.Class.ExpenseManager;
+import com.example.myapplication.Class.User;
+import com.example.myapplication.Class.UserSingleton;
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.expenseAdapter;
 import com.example.myapplication.room.AppDatabase;
+import com.example.myapplication.room.BalanceDao;
 import com.example.myapplication.room.ExpenseDao;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -41,6 +45,9 @@ public class expenseFragment extends Fragment {
     private List<ExpenseClass> mylist;
     private expenseAdapter adapter1;
     private ExpenseDao expenseDao;
+    private BalanceDao balanceDao;
+    private User loggedUser;
+    private BalanceManager BalanceManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,11 +75,14 @@ public class expenseFragment extends Fragment {
         date = view.findViewById(R.id.date);
         balance = view.findViewById(R.id.addBalance);
         addBalance = view.findViewById(R.id.addButton);
+        loggedUser = UserSingleton.getInstance().getUser();
+        BalanceManager = BalanceManager.getInstance();
 
         // Initializing database and list
         AppDatabase db = AppDatabase.getInstance(getContext());
         expenseDao = db.expenseDao();
-        mylist = expenseDao.getAll(1);
+        balanceDao = db.balanceDao();
+        mylist = expenseDao.getAll(loggedUser.getUid());
 
         // Setting up RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -84,14 +94,37 @@ public class expenseFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
         date.setText(currentDate);
+        //setting up balance
+        if(balanceDao.getAll(loggedUser.getUid()).size() ==  0 )
+        {
+            BalanceClass balanceClass = BalanceManager.setBalance(loggedUser.getUid(), loggedUser.getUid(), 0, 0, 0);
+            PreviousBalance.setText(String.valueOf(BalanceManager.getBalance().getPreviousBalance()));
+            CurrentBalance.setText(String.valueOf(BalanceManager.getBalance().getCurrentBalance()));
+            LastTransaction.setText(String.valueOf(BalanceManager.getBalance().getLastTransaction()));
+            balanceDao.insertAll(BalanceManager.getBalance());
 
-        // Adding balance functionality
+        }
+        else
+        {
+            BalanceClass balanceClass = BalanceManager.setBalance( loggedUser.getUid(), loggedUser.getUid(), balanceDao.getAll(loggedUser.getUid()).get(0).getPreviousBalance() , balanceDao.getAll(loggedUser.getUid()).get(0).getCurrentBalance(), balanceDao.getAll(loggedUser.getUid()).get(0).getLastTransaction());;
+            PreviousBalance.setText(String.valueOf(BalanceManager.getBalance().getPreviousBalance()));
+            CurrentBalance.setText(String.valueOf(BalanceManager.getBalance().getCurrentBalance()));
+            LastTransaction.setText(String.valueOf(BalanceManager.getBalance().getLastTransaction()));
+            balanceDao.update(BalanceManager.getBalance());
+        }
+
         addBalance.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 String balanceText = balance.getText().toString();
                 CurrentBalance.setText(balanceText);
+                BalanceManager.updateBalance(Integer.parseInt(balanceText));
+                PreviousBalance.setText(String.valueOf(BalanceManager.getBalance().getPreviousBalance()));
+                CurrentBalance.setText(String.valueOf(BalanceManager.getBalance().getCurrentBalance()));
+                LastTransaction.setText(String.valueOf(BalanceManager.getBalance().getLastTransaction()));
+                balanceDao.update(BalanceManager.getBalance());
             }
         });
 
@@ -131,17 +164,18 @@ public class expenseFragment extends Fragment {
 
                                 //ExpenseClass expenseClass = new ExpenseClass(Integer.parseInt(amountText), descriptionText, type, key, 1);
                                 ExpenseManager expenseManager = new ExpenseManager();
+                                int uid = loggedUser.getUid();
 
-                                expenseDao.insertAll(expenseManager.addExpense(type, descriptionText, Integer.parseInt(amountText), key, 1));
+                                expenseDao.insertAll(expenseManager.addExpense(type, descriptionText, Integer.parseInt(amountText), key, uid));
                                 mylist.clear();
-                                mylist.addAll(expenseDao.getAll(1));
+                                mylist.addAll(expenseDao.getAll(uid));
                                 adapter1.notifyDataSetChanged();
-
                                 // Updating balance
-                                int previousBalance = Integer.parseInt(CurrentBalance.getText().toString());
-                                int newBalance = previousBalance - Integer.parseInt(amountText);
-                                CurrentBalance.setText(String.valueOf(newBalance));
-                                PreviousBalance.setText(String.valueOf(previousBalance));
+                                BalanceManager.updateBalance(-Integer.parseInt(amountText));
+                                PreviousBalance.setText(String.valueOf(BalanceManager.getBalance().getPreviousBalance()));
+                                CurrentBalance.setText(String.valueOf(BalanceManager.getBalance().getCurrentBalance()));
+                                LastTransaction.setText(String.valueOf(BalanceManager.getBalance().getLastTransaction()));
+                                balanceDao.update(BalanceManager.getBalance());
                             }
                         })
                         .create();

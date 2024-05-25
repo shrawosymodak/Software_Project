@@ -1,98 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUp"
-    android:orientation="vertical"
     android:background="@drawable/loginpage"
-    >
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="20dp"
-        android:text="Sign Up"
-        android:textSize="30sp"
-        />
+    tools:context=".SignUp">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextFieldusername"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Username"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.32999998">
 
-        <EditText
-            android:id="@+id/fullname"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/username_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:width="340dp"
-            android:height="60dp"
-            android:hint="Enter Full Name"
-            android:textColor="#223754"
-            android:textColorHighlight="#223754"
-            android:textColorHint="#223754"
-            android:textColorLink="#223754" />
-        <EditText
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextFieldemail"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Email"
+        app:layout_constraintEnd_toEndOf="@+id/outlinedTextFieldusername"
+        app:layout_constraintStart_toStartOf="@+id/outlinedTextFieldusername"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextFieldusername">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:width="340dp"
-            android:height="60dp"
-            android:id="@+id/Password"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:hint="Password"
-            app:passwordToggleEnabled="true"
-            android:textColor="#223754"
-            android:textColorHighlight="#223754"
-            android:textColorLink="#223754"
-            />
-        <EditText
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextFieldpassword"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Password"
+        app:layout_constraintEnd_toEndOf="@+id/outlinedTextFieldemail"
+        app:layout_constraintStart_toStartOf="@+id/outlinedTextFieldemail"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextFieldemail">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_edit_text"
+            android:inputType="textPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:width="340dp"
-            android:height="60dp"
-            android:id="@+id/email"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:hint="Password"
-            app:passwordToggleEnabled="true"
-            android:textColor="#223754"
-            android:textColorHighlight="#223754"
-            android:textColorLink="#223754"
-            />
-    </LinearLayout>
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/signup"
-        style="@style/ThemeOverlay.Material3.Button.TonalButton"
-        android:layout_width="190dp"
+        android:id="@+id/registration_button"
+        android:layout_width="0dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+
+        android:textSize="18dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"
-        android:fontFamily="sans-serif-medium"
-        android:text="SignUp"
-        android:textSize="20sp"
-        android:visibility="visible"
-        app:backgroundTint="#E1006CAB">
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#000000"
+        android:text="Register"
 
-    </com.google.android.material.button.MaterialButton>
+        app:layout_constraintEnd_toEndOf="@+id/outlinedTextFieldpassword"
+        app:layout_constraintStart_toStartOf="@+id/outlinedTextFieldpassword"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextFieldpassword" />
 
 
+    <TextView
+        android:id="@+id/login_text_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/roboto_slab_bold"
+        android:text="Already have an account?"
+        android:textColor="#FFFFFF"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/registration_button"
+        app:layout_constraintStart_toStartOf="@+id/registration_button"
+        app:layout_constraintTop_toBottomOf="@+id/registration_button" />
+
+    <TextView
+        android:id="@+id/login_page_link_from_registration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_slab_bold"
+        android:text="LOGIN"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_text_prompt"
+        app:layout_constraintVertical_bias="0.07999998" />
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
