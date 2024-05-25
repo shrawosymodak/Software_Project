@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,55 +21,41 @@ import android.widget.TextView;
 
 import com.example.myapplication.Class.BalanceClass;
 import com.example.myapplication.Class.ExpenseClass;
-import com.example.myapplication.Class.TodoClass;
 import com.example.myapplication.R;
-import com.example.myapplication.SignUp;
 import com.example.myapplication.adapters.expenseAdapter;
 import com.example.myapplication.room.AppDatabase;
 import com.example.myapplication.room.ExpenseDao;
-import com.example.myapplication.room.UserDao;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-//import com.google.firebase.database.DataSnapshot;
-//import com.google.firebase.database.DatabaseError;
-//import com.google.firebase.database.DatabaseReference;
-//import com.google.firebase.database.FirebaseDatabase;
-//import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import kotlin.random.Random;
-
 public class expenseFragment extends Fragment {
-    private Button expenseButton,statusButton,addBalance;
-    private TextView PreviousBalance,CurrentBalance,LastTransaction , date;
+    private Button expenseButton, statusButton, addBalance;
+    private TextView PreviousBalance, CurrentBalance, LastTransaction, date;
     private EditText balance;
     private RecyclerView recyclerView;
-    public List<ExpenseClass> mylist;
+    private List<ExpenseClass> mylist;
+    private expenseAdapter adapter1;
+    private ExpenseDao expenseDao;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.fragment_expense, container, false);
-        return view;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_expense, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
-    {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //initializing everything
-        mylist = new ArrayList<>();
+        // Initializing views
         expenseButton = view.findViewById(R.id.addExpense);
         statusButton = view.findViewById(R.id.status);
         PreviousBalance = view.findViewById(R.id.previousBalance);
@@ -80,37 +65,36 @@ public class expenseFragment extends Fragment {
         date = view.findViewById(R.id.date);
         balance = view.findViewById(R.id.addBalance);
         addBalance = view.findViewById(R.id.addButton);
-        AppDatabase db = AppDatabase.getInstance(getContext());
-        ExpenseDao expenseDao = db.expenseDao();
 
-        //setting up recycler view
+        // Initializing database and list
+        AppDatabase db = AppDatabase.getInstance(getContext());
+        expenseDao = db.expenseDao();
+        mylist = expenseDao.getAll(1);
+
+        // Setting up RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
-        expenseAdapter adapter1 = new expenseAdapter(mylist, getContext());
+        adapter1 = new expenseAdapter(mylist, getContext());
         recyclerView.setAdapter(adapter1);
 
-        //setting up calendar
+        // Setting up date
         Calendar calendar = Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
         date.setText(currentDate);
 
-        String Balance = balance.getText().toString();
-        addBalance.setOnClickListener(new View.OnClickListener()
-        {
+        // Adding balance functionality
+        addBalance.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                CurrentBalance.setText(Balance);
+            public void onClick(View v) {
+                String balanceText = balance.getText().toString();
+                CurrentBalance.setText(balanceText);
             }
         });
-        ExpenseClass expenseClass = new ExpenseClass(1000, "Electricity ", "Bill", 1 ,1 );
-        mylist.add(expenseClass);
 
-
+        // Adding an expense
         expenseButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 View expenseDialogue = LayoutInflater.from(getContext()).inflate(R.layout.expensedialogue, null);
                 Spinner spinner = expenseDialogue.findViewById(R.id.spinner);
                 ArrayList<String> arrayList = new ArrayList<>();
@@ -121,56 +105,40 @@ public class expenseFragment extends Fragment {
                 arrayList.add("Hangout");
                 arrayList.add("Others");
 
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.spinnerview, R.id.spinnerText, arrayList);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.spinnerview, R.id.spinnerText, arrayList);
                 spinner.setAdapter(adapter);
+
                 AlertDialog alertDialog = new MaterialAlertDialogBuilder(getContext())
                         .setView(expenseDialogue)
                         .setTitle("Add Expense")
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-                        {
+                        .setNegativeButton("Cancel", null)
+                        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //nothing
-                            }
-                        })
-                        .setPositiveButton("Add", new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which)
-                            {
-
-
                                 EditText amount = expenseDialogue.findViewById(R.id.amount);
                                 EditText description = expenseDialogue.findViewById(R.id.details);
-                                Spinner spinner = expenseDialogue.findViewById(R.id.spinner);
                                 String type = spinner.getSelectedItem().toString();
-                                String amount1 = amount.getText().toString();
-                                String description1 = description.getText().toString();
+                                String amountText = amount.getText().toString();
+                                String descriptionText = description.getText().toString();
 
-                                mylist = expenseDao.getAll(1);
-                                int key = mylist.size();
-                                key++;
+                                int key = mylist.size() + 1;
 
-                                ExpenseClass expenseClass = new ExpenseClass(Integer.parseInt(amount1), description1, type,key , 1 );
+                                ExpenseClass expenseClass = new ExpenseClass(Integer.parseInt(amountText), descriptionText, type, key, 1);
                                 expenseDao.insertAll(expenseClass);
-
-                                String PB = PreviousBalance.getText().toString();
-                                String CB = CurrentBalance.getText().toString();
-
+                                mylist.clear();
+                                mylist.addAll(expenseDao.getAll(1));
                                 adapter1.notifyDataSetChanged();
 
-
-                                BalanceClass newbalanceClass = new BalanceClass(Integer.parseInt(CB), Integer.parseInt(CB) - Integer.parseInt(amount1), Integer.parseInt(amount1));
-
-
+                                // Updating balance
+                                int previousBalance = Integer.parseInt(CurrentBalance.getText().toString());
+                                int newBalance = previousBalance - Integer.parseInt(amountText);
+                                CurrentBalance.setText(String.valueOf(newBalance));
+                                PreviousBalance.setText(String.valueOf(previousBalance));
                             }
                         })
                         .create();
                 alertDialog.show();
-
             }
         });
     }
-
 }
