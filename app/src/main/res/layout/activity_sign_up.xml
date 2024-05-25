@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="@drawable/loginpage"
     >
-    <androidx.appcompat.widget.AppCompatEditText
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -17,92 +17,50 @@
         android:textSize="30sp"
         />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:hint="Enter Full Name"
-        android:id="@+id/fullname"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="350dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="20dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/password"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:hint="Enter Password"
-        app:passwordToggleEnabled="true"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="350dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="20dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/number"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:hint="Phone Number"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         >
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="175dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="20dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/gender"
+        <EditText
+            android:id="@+id/fullname"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:hint="Gender"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="175dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/date"
+            android:width="340dp"
+            android:height="60dp"
+            android:hint="Enter Full Name"
+            android:textColor="#223754"
+            android:textColorHighlight="#223754"
+            android:textColorHint="#223754"
+            android:textColorLink="#223754" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:width="340dp"
+            android:height="60dp"
+            android:id="@+id/Password"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:hint="Date of Birth"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:hint="Password"
+            app:passwordToggleEnabled="true"
+            android:textColor="#223754"
+            android:textColorHighlight="#223754"
+            android:textColorLink="#223754"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:width="340dp"
+            android:height="60dp"
+            android:id="@+id/email"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:hint="Password"
+            app:passwordToggleEnabled="true"
+            android:textColor="#223754"
+            android:textColorHighlight="#223754"
+            android:textColorLink="#223754"
+            />
     </LinearLayout>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signup"
