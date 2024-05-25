@@ -23,6 +23,18 @@ public class LoginTest {
         onView(ViewMatchers.withText("Please Fill all the Fields"));
     }
     @Test
+    public void testWithoutemail() {
+        // Attempt to login without filling email
+        onView(ViewMatchers.withId(R.id.emailLogin)).perform(ViewActions.typeText(""));
+        onView(ViewMatchers.withText("Please Fill all the Fields"));
+    }
+    @Test
+    public void testWithoutpassword() {
+        // Attempt to login without filling password
+        onView(ViewMatchers.withId(R.id.passwordLogin)).perform(ViewActions.typeText(""));
+        onView(ViewMatchers.withText("Please Fill all the Fields"));
+    }
+    @Test
     public void testwithfieds(){
         // Attempt to login with all fields filled
         onView(ViewMatchers.withId(R.id.emailLogin)).perform(ViewActions.typeText("test"));

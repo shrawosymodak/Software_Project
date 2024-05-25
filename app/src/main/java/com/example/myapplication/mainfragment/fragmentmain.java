@@ -45,5 +45,11 @@ public class fragmentmain extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame,fragment);
         fragmentTransaction.commit();
     }
+
+    public void loadFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment, fragment)
+                .commit();
+    }
 }
 

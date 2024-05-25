@@ -22,6 +22,25 @@ public class SignUpTest {
         onView(ViewMatchers.withText("Please Fill all the Fields"));
     }
     @Test
+    public void testWithoutusername() {
+        // Attempt to sign up without filling username
+        onView(ViewMatchers.withId(R.id.username_edit_text)).perform(ViewActions.typeText(""));
+        onView(ViewMatchers.withText("Please Fill all the Fields"));
+
+    }
+    @Test
+    public void testWithoutemail() {
+        // Attempt to sign up without filling email
+        onView(ViewMatchers.withId(R.id.email_edit_text)).perform(ViewActions.typeText(""));
+        onView(ViewMatchers.withText("Please Fill all the Fields"));
+    }
+    @Test
+    public void testWithoutpassword() {
+        // Attempt to sign up without filling password
+        onView(ViewMatchers.withId(R.id.password_edit_text)).perform(ViewActions.typeText(""));
+        onView(ViewMatchers.withText("Please Fill all the Fields"));
+    }
+    @Test
     public void testwithfieds() {
         // Attempt to sign up with all fields filled
         onView(ViewMatchers.withId(R.id.username_edit_text)).perform(ViewActions.typeText("test"));

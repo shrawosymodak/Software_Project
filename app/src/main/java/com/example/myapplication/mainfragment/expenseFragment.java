@@ -205,4 +205,7 @@ public class expenseFragment extends Fragment {
             }
         });
     }
+    public String getFrag () {
+        return "Expense";
+    }
 }
