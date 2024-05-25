@@ -44,7 +44,7 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="30dp"
         android:backgroundTint="#575ea3"
-        android:src="@drawable/ic_launcher_background"
+        android:src="@drawable/planning"
 
 
 

@@ -27,6 +27,8 @@ import com.example.myapplication.Class.User;
 import com.example.myapplication.Class.UserSingleton;
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.expenseAdapter;
+import com.example.myapplication.expenseFactory.Items;
+import com.example.myapplication.expenseFactory.ItemsFactory;
 import com.example.myapplication.room.AppDatabase;
 import com.example.myapplication.room.BalanceDao;
 import com.example.myapplication.room.ExpenseDao;
@@ -135,13 +137,33 @@ public class expenseFragment extends Fragment {
             public void onClick(View v) {
                 View expenseDialogue = LayoutInflater.from(getContext()).inflate(R.layout.expensedialogue, null);
                 Spinner spinner = expenseDialogue.findViewById(R.id.spinner);
+//                Implementation of Factory Design Pattern
+                ItemsFactory itemsFactory = new ItemsFactory();
+                Items itemBills = itemsFactory.getItems("Bills");
+                itemBills.setItemName();
+                Items itemFood = itemsFactory.getItems("Food");
+                itemFood.setItemName();
+                Items itemGroceries = itemsFactory.getItems("Groceries");
+                itemGroceries.setItemName();
+                Items itemShopping = itemsFactory.getItems("Shopping");
+                itemShopping.setItemName();
+                Items itemTransport = itemsFactory.getItems("Transport");
+                itemTransport.setItemName();
+                Items itemMiscellaneous = itemsFactory.getItems("Miscellaneous");
+                itemMiscellaneous.setItemName();
                 ArrayList<String> arrayList = new ArrayList<>();
-                arrayList.add("Bills");
-                arrayList.add("Food");
-                arrayList.add("Snacks");
-                arrayList.add("Groceries");
-                arrayList.add("Hangout");
-                arrayList.add("Others");
+                arrayList.add(itemBills.getItemName());
+                arrayList.add(itemFood.getItemName());
+                arrayList.add(itemGroceries.getItemName());
+                arrayList.add(itemShopping.getItemName());
+                arrayList.add(itemTransport.getItemName());
+                arrayList.add(itemMiscellaneous.getItemName());
+//                arrayList.add("Bills");
+//                arrayList.add("Food");
+//                arrayList.add("Snacks");
+//                arrayList.add("Groceries");
+//                arrayList.add("Hangout");
+//                arrayList.add("Others");
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.spinnerview, R.id.spinnerText, arrayList);
                 spinner.setAdapter(adapter);
