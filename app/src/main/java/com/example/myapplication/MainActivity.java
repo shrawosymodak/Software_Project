@@ -46,20 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 String password = pass.getText().toString();
                 Intent intent = new Intent(MainActivity.this, fragmentmain.class);
                 startActivity(intent);
-                //   mAuth.signInWithEmailAndPassword(user,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task)
-//            {
-//                        if(task.isSuccessful())
-//                        {
-//                        }
-//                        else
-//                        {
-//                            Toast.makeText(MainActivity.this, "Wrong Id or Password", Toast.LENGTH_SHORT).show();
-//                        }
-//
-//                    }
-//                });
+
             }
         });
     }
