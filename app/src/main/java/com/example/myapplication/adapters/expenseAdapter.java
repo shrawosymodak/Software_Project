@@ -21,22 +21,26 @@ public class expenseAdapter extends RecyclerView.Adapter<expenseAdapter.myadapte
     private Context context;
 
 
-    public expenseAdapter(List<ExpenseClass> mylist, Context context) {
+    public expenseAdapter(List<ExpenseClass> mylist, Context context)
+    {
         this.mylist = mylist;
         this.context = context;
     }
 
     @Override
-    public expenseAdapter.myadapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public expenseAdapter.myadapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView =  inflater.inflate(R.layout.expenseadapter,parent,false);
         return new myadapter(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull expenseAdapter.myadapter holder, int position) {
+    public void onBindViewHolder(@NonNull expenseAdapter.myadapter holder, int position)
+    {
         ExpenseClass item = mylist.get(position);
         holder.amount.setText(String.valueOf(item.getAmount()));
+        //holder.amount.setText(item.getAmount());
         holder.description.setText(item.getDescription());
         holder.title.setText(item.getType());
     }
@@ -50,7 +54,8 @@ public class expenseAdapter extends RecyclerView.Adapter<expenseAdapter.myadapte
         private CardView cardView;
         private TextView amount,description,title;
 
-        public myadapter(@NonNull View itemView) {
+        public myadapter(@NonNull View itemView)
+        {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardviewexpense);
             amount = itemView.findViewById(R.id.expenseamount);

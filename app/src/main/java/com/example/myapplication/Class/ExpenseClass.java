@@ -12,7 +12,7 @@ public class ExpenseClass
 
     @PrimaryKey(autoGenerate = true)
     public int id;
-    public int uid;
+    public int user_id;
     @ColumnInfo(name = "amount")
     int amount;
     @ColumnInfo (name = "description")
@@ -20,12 +20,13 @@ public class ExpenseClass
     @ColumnInfo (name = "type")
     String type;
 
-    public ExpenseClass(int amount, String description, String type, int id )
+    public ExpenseClass(int amount, String description, String type, int id , int user_id)
     {
         this.amount = amount;
         Description = description;
         this.type = type;
         this.id=id;
+        this.user_id=user_id;
     }
 
     public int getId() {

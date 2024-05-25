@@ -80,6 +80,8 @@ public class expenseFragment extends Fragment {
         date = view.findViewById(R.id.date);
         balance = view.findViewById(R.id.addBalance);
         addBalance = view.findViewById(R.id.addButton);
+        AppDatabase db = AppDatabase.getInstance(getContext());
+        ExpenseDao expenseDao = db.expenseDao();
 
         //setting up recycler view
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -101,6 +103,9 @@ public class expenseFragment extends Fragment {
                 CurrentBalance.setText(Balance);
             }
         });
+        ExpenseClass expenseClass = new ExpenseClass(1000, "Electricity ", "Bill", 1 ,1 );
+        mylist.add(expenseClass);
+
 
         expenseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,20 +148,15 @@ public class expenseFragment extends Fragment {
                                 String amount1 = amount.getText().toString();
                                 String description1 = description.getText().toString();
 
-
-
-                                AppDatabase db = AppDatabase.getInstance(getContext());
-                                ExpenseDao expenseDao = db.expenseDao();
-                                mylist = expenseDao.getAll();
+                                mylist = expenseDao.getAll(1);
                                 int key = mylist.size();
                                 key++;
 
-                                ExpenseClass expenseClass = new ExpenseClass(Integer.parseInt(amount1), description1, type,key);
+                                ExpenseClass expenseClass = new ExpenseClass(Integer.parseInt(amount1), description1, type,key , 1 );
                                 expenseDao.insertAll(expenseClass);
 
                                 String PB = PreviousBalance.getText().toString();
                                 String CB = CurrentBalance.getText().toString();
-
 
                                 adapter1.notifyDataSetChanged();
 

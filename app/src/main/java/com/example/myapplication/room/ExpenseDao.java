@@ -11,8 +11,8 @@ import java.util.List;
 @Dao
 public interface ExpenseDao
 {
-    @Query("SELECT * FROM expenseclass")
-    List<ExpenseClass> getAll();
+    @Query("SELECT * FROM expenseclass WHERE user_id = :userId")
+    List<ExpenseClass> getAll(int userId);
     @Insert
     void insertAll(ExpenseClass expense);
     @Delete

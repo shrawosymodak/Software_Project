@@ -14,12 +14,13 @@ import com.example.myapplication.Class.BalanceClass;
 import com.example.myapplication.Class.ExpenseClass;
 import com.example.myapplication.Class.User;
 
-    @Database(entities = {User.class , BalanceClass.class , ExpenseClass.class}, version = 2)
+    @Database(entities = {User.class , BalanceClass.class , ExpenseClass.class}, version = 3)
     public abstract class AppDatabase extends RoomDatabase
     {
         public abstract UserDao userDao();
         public abstract BalanceDao balanceDao();
         public abstract ExpenseDao expenseDao();
+
         private static final String DB_NAME = "mainDb";
         private static AppDatabase instance;
         public static synchronized AppDatabase getInstance(@NonNull final Context context)
