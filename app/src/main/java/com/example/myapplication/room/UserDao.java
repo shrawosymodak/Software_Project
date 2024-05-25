@@ -26,4 +26,7 @@ public interface UserDao {
 
     @Delete
     void delete(User user);
+//    For the purpose of login
+    @Query("SELECT * FROM user WHERE email = :email AND password = :password LIMIT 1")
+    User loginuser(String email, String password);
 }
