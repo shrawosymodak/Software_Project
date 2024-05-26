@@ -21,6 +21,4 @@ public interface BalanceDao
     void update(BalanceClass balance);
     @Delete
     void delete(BalanceClass balance);
-
-
 }
