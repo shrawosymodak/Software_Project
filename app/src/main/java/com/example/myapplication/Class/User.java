@@ -22,7 +22,7 @@ public class User
     }
 
 
-
+    @Ignore
     public User(int uid, String firstName, String lastName, String password) {
         this.uid = uid;
         this.firstName = firstName;
