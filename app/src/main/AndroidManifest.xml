@@ -18,9 +18,9 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-        <activity
-            android:name=".adapters.expenseAdapter"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".adapters.expenseAdapter"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".mainfragment.fragmentmain"
             android:exported="false" />
