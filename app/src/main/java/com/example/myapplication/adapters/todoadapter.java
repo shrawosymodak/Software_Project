@@ -24,6 +24,7 @@ public class todoadapter extends RecyclerView.Adapter<todoadapter.myadapter> {
     private List<TodoClass> mylist;
 
 
+    public todoadapter() {}
     public todoadapter(Context context, List<TodoClass> mylist)
     {
         this.context = context;
